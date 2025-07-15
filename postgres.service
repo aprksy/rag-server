@@ -1,0 +1,18 @@
+[Unit]
+Description=PostgreSQL Database Server
+Documentation=man:postgres(1)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=postgres
+Group=postgres
+WorkingDirectory=/var/lib/postgresql/data  # Or your data directory
+ExecStart=/usr/local/pgsql/bin/postgres -D /var/lib/postgresql/data
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+TimeoutSec=infinity
+
+[Install]
+WantedBy=multi-user.target
